@@ -17,7 +17,7 @@ DATA_SA = "SECTOR_ALARM"
 _LOGGER = logging.getLogger(__name__)
 DEPENDENCIES = []
 
-REQUIREMENTS = ['aiohttp', 'asyncsector>=0.1.3']
+#REQUIREMENTS = ['aiohttp', 'asyncsector>=0.2.0']
 
 CONF_EMAIL = 'email'
 CONF_PASSWORD = 'password'
@@ -47,7 +47,7 @@ CONFIG_SCHEMA = vol.Schema({
 
 async def async_setup(hass, config):
 
-    from asyncsector import AsyncSector
+    from .asyncsector import AsyncSector
 
     session = async_get_clientsession(hass)
 
@@ -67,14 +67,16 @@ async def async_setup(hass, config):
     hass.data[DATA_SA] = sector_data
 
     if thermometers:
-        discovery.load_platform(hass, 'sensor', DOMAIN, {}, config)
+        hass.async_create_task(
+            discovery.async_load_platform(hass, 'sensor', DOMAIN, {}, config))
 
     if panel:
-        discovery.load_platform(
-            hass, 'alarm_control_panel', DOMAIN, {
-                CONF_CODE_FORMAT: config[DOMAIN][CONF_CODE_FORMAT],
-                CONF_CODE: config[DOMAIN][CONF_CODE]
-            }, config)
+        hass.async_create_task(
+            discovery.async_load_platform(
+                hass, 'alarm_control_panel', DOMAIN, {
+                    CONF_CODE_FORMAT: config[DOMAIN][CONF_CODE_FORMAT],
+                    CONF_CODE: config[DOMAIN][CONF_CODE]
+                }, config))
 
     return True
 

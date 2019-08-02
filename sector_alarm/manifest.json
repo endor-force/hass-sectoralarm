@@ -1,0 +1,10 @@
+{
+  "domain": "sector_alarm",
+  "name": "Sector alarm",
+  "documentation": "https://www.home-assistant.io/components/sector-alarm",
+  "requirements": [
+    "aiohttp"
+  ],
+  "dependencies": [],
+  "codeowners": []
+}
