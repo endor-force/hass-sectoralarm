@@ -1,6 +1,8 @@
 # hass-sectoralarm
 
-A Sector Alarm component for Home Assistant
+A Sector Alarm component for Home Assistant.
+
+Forked from mgejke and added changes while we wait for his return and merging the PR's that was suggested.
 
 ## Usage
 
